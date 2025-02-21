@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "ts",
+    "description": "Reads CSRFTOKEN cookie from Instagram",
+    "version": "1.0",
+    "permissions": [ "webRequest", "cookies", "storage", "tabs" ],
+    "host_permissions": [
+      "https://*.instagram.com/*",
+      "https://www.instagram.com/"
+    ],
+    "background": {
+      "service_worker": "src/background/index.js",
+      "type": "module"
+    },
+    "action": {
+      "default_popup": "index.html"
+    },
+    "icons": {
+    "16": "logo1.png",
+    "32": "logo2.png",
+    "48": "logo3.png",
+    "128": "logo4.png"
+  },
+  "web_accessible_resources": [ {
+      "matches": [ "https://*.instagram.com/*" ],
+      "resources": [ "/font/*", "/icons/*" ]
+   } ]
+  }
