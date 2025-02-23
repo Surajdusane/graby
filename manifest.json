@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "ts",
-    "description": "Reads CSRFTOKEN cookie from Instagram",
+    "name": "Graby",
+    "description": "Instagram Profile Data Extractor",
     "version": "1.0",
     "permissions": [ "webRequest", "cookies", "storage", "tabs" ],
     "host_permissions": [

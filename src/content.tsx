@@ -8,6 +8,8 @@ import { isInstagramAccountUrl } from "./lib/utils";
 import { useEffect, useState } from "react";
 import Data from "./fetures/posts/components/Data";
 import Video from "./fetures/posts/components/Video";
+import SettingsButton from "./fetures/settings/components/SettingButton";
+import SettingsPage from "./fetures/settings/components/Settings";
 
 const ContentPage = () => {
   const [currentUrl, setCurrentUrl] = useState<string | null>(null);
@@ -26,9 +28,13 @@ const ContentPage = () => {
   }
 
   return (
-    <Card className="min-w-[450px] min-h-[450px] font-pop">
-      <CardHeader>
+    <Card className="min-w-[440px] min-h-[440px] font-pop">
+      <CardHeader >
+        <div className="flex justify-between items-center">
         <HeaderLogo />
+        <SettingsButton />
+        <SettingsPage />
+        </div>
       </CardHeader>
       <CardContent>
       <Tabs defaultValue="home">
@@ -48,7 +54,7 @@ const ContentPage = () => {
   <TabsContent value="video">
     <Video />
   </TabsContent>
-</Tabs>
+      </Tabs>
       </CardContent>
     </Card>
   );

@@ -5,6 +5,22 @@ import { useGetPost } from "../api/use-get-post";
 import useDownlaodVideo from "../Hooks/useDownlaodVideo";
 import ProgressDialog from "./ProgressDialog";
 import { filterPosts } from "@/lib/filterData";
+import usegetFilterParameters from "../Hooks/use-get-filterPatamiters";
+import { useFilterState } from "../Hooks/useFilterState";
+import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import usegetName, { getDefaulNameSchema } from "../Hooks/use-get-name";
+import Loader from "@/components/loader";
+
+interface NamingSchema {
+  code: boolean
+  comments: boolean
+  date: boolean
+  duration: boolean
+  id: boolean
+  likes: boolean
+  views: boolean
+}
 
 interface PostData {
   date: number;
@@ -22,15 +38,24 @@ interface PostData {
 
 const DownloadVideoButton = () => {
   const username = useGetUsername();
+  const { filtername } = useFilterState();
 
   // Fetch posts
   const { isLoading: isFetching, error: fetchError, refetch } = useGetPost(username);
 
+
+  const [namingSchema, setNamingSchema] = useState<NamingSchema>(getDefaulNameSchema());
+  useEffect(() => {
+    const fetchNamingSchema = async () => {
+      const schema = await usegetName();
+      setNamingSchema(schema);
+    };
+    fetchNamingSchema();
+  }, []);
+
   // Download videos
   const { downloadMedia, progress, loading: isDownloading, error: downloadError } =
-    useDownlaodVideo(username, {
-      date: true,
-    });
+    useDownlaodVideo(username, namingSchema);
 
   // Handle button click
   const onClickHandler = async () => {
@@ -40,18 +65,26 @@ const DownloadVideoButton = () => {
       if (!refetchResult.data) {
         throw new Error("No data available to download.");
       }
+      const data = refetchResult.data.data as PostData[];
+
+      const filterParameters = await usegetFilterParameters(filtername as string);
 
       // Apply filters to the data
-            const filteredData = filterPosts(
-              refetchResult.data.data,
-              ["video"], // mediaTypes
-              {}, // dateFilter
-              {}, // likesFilter
-              {}, // viewsFilter
-              {}, // commentsFilter
-              {}, // durationFilter
-              false // ignoreCarouselViews
-            );
+      const filteredData = filterPosts(
+        data,
+        filterParameters.mediaTypes || [],
+        filterParameters.dateFilter || {},
+        filterParameters.likesFilter || {},
+        filterParameters.viewsFilter || {},
+        filterParameters.commentsFilter || {},
+        filterParameters.durationFilter || {},
+        filterParameters.ignoreCarouselViews || false
+      );
+
+      if (!filteredData || filteredData.length === 0) {
+        toast.error("No posts found after applying filters.");
+        return;
+      }
 
       // Download media
       await downloadMedia(filteredData);
@@ -59,6 +92,10 @@ const DownloadVideoButton = () => {
       console.error("Error:", err.message);
     }
   };
+
+  if(isFetching) {
+    return <Loader visible={isFetching} />
+  }
 
   return (
     <>

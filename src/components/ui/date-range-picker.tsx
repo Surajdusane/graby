@@ -1,3 +1,4 @@
+// src/components/ui/date-range-picker.tsx
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -36,7 +37,7 @@ export function DateRangePicker({
   return (
     <div>
       <div className="*:not-first:mt-2">
-        <Label htmlFor={id}>{label}</Label>
+        <Label className="hidden" htmlFor={id}>{label}</Label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
@@ -73,17 +74,6 @@ export function DateRangePicker({
           </PopoverContent>
         </Popover>
       </div>
-      <p className="text-muted-foreground mt-2 text-xs" role="region" aria-live="polite">
-        Built with{" "}
-        <a
-          className="hover:text-foreground underline"
-          href="https://daypicker.dev/"
-          target="_blank"
-          rel="noopener nofollow"
-        >
-          React DayPicker
-        </a>
-      </p>
     </div>
   );
 }

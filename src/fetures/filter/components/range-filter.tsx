@@ -1,7 +1,7 @@
 import { FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-export function RangeFilter({ form, name, label } : { form: any, name: string, label: string }) {
+export function RangeFilter({ form, name, label }: { form: any, name: string, label: string }) {
   return (
     <div className="grid grid-cols-2 gap-4">
       <FormField
@@ -16,8 +16,8 @@ export function RangeFilter({ form, name, label } : { form: any, name: string, l
                 {...field}
                 value={field.value ?? ""}
                 onChange={(e) => {
-                  const value = e.target.value === "" ? undefined : Number(e.target.value)
-                  field.onChange(value)
+                  const value = e.target.value === "" ? undefined : Number(e.target.value);
+                  field.onChange(value);
                 }}
               />
             </FormControl>
@@ -36,8 +36,8 @@ export function RangeFilter({ form, name, label } : { form: any, name: string, l
                 {...field}
                 value={field.value ?? ""}
                 onChange={(e) => {
-                  const value = e.target.value === "" ? undefined : Number(e.target.value)
-                  field.onChange(value)
+                  const value = e.target.value === "" ? undefined : Number(e.target.value);
+                  field.onChange(value);
                 }}
               />
             </FormControl>
@@ -45,6 +45,5 @@ export function RangeFilter({ form, name, label } : { form: any, name: string, l
         )}
       />
     </div>
-  )
+  );
 }
-

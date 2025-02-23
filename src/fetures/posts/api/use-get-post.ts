@@ -8,7 +8,7 @@ export const useGetPost = (username: string | null) => {
         queryFn: async () => {
             const cachedData = await checkChromeStorageCache<any>({
                 queryKey: username as string + "post",
-                maxAge: 1000 * 60 * 60 * 0.10
+                maxAge: 1000 * 60 * 60 * 2,
               });
 
               if (cachedData) {
