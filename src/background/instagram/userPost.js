@@ -73,7 +73,6 @@ export async function fetchInstagramUserPost(username) {
         postData.push(...currentData.items);
 
         console.log(`Fetched batch of ${currentData.items.length} posts. Total posts: ${postData.length}`);
-        localStorage.setItem({ postsFetchedCount: postData.length });
       } catch (paginationError) {
         console.warn('Error fetching additional page:', paginationError);
         break; // Exit loop but return already collected data
