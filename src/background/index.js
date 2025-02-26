@@ -40,3 +40,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 });
+
+
+// Check Online Status
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "checkOnlineStatus") {
+    sendResponse({ isOnline: navigator.onLine });
+  }
+});

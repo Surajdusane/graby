@@ -10,9 +10,12 @@ import Data from "./fetures/posts/components/Data";
 import Video from "./fetures/posts/components/Video";
 import SettingsButton from "./fetures/settings/components/SettingButton";
 import SettingsPage from "./fetures/settings/components/Settings";
+import useGetOnlineStatus from "./hooks/use-get-onlineStatus";
+import Offline from "./components/Global/Offline";
 
 const ContentPage = () => {
   const [currentUrl, setCurrentUrl] = useState<string | null>(null);
+  const onlineStatus = useGetOnlineStatus();
 
   useEffect(() => {
     const cromeutils = new ChromeStorageUtils();
@@ -27,6 +30,8 @@ const ContentPage = () => {
     }
   }
 
+  if(!onlineStatus) return <Offline />
+  
   return (
     <Card className="min-w-[440px] min-h-[440px] font-pop">
       <CardHeader >
